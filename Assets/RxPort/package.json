@@ -1,0 +1,11 @@
+{
+  "name": "com.vitrostake.rxport",
+  "displayName": "RxPort",
+  "version": "1.0.0",
+  "unity": "2021.2",
+  "description": "Utilities for UniRx",
+  "license": "",
+  "dependencies" : {
+    "com.neuecc.unirx": "latest"
+  }
+}
