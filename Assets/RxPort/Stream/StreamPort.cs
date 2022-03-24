@@ -19,7 +19,7 @@ namespace VitroStake.RxPort {
       OpenCore();
       _opening = true;
 
-      StreamPortStore.UpdateOrAddProcess(this);
+      StreamPortStore.UpdateOrAddPort(this);
 
       return this;
     }
@@ -61,18 +61,18 @@ namespace VitroStake.RxPort {
     }
 
     public static bool TryGetPort<TPort>(out TPort port) where TPort : StreamPort {
-      return TryGetProcessImpl(out port, p => true);
+      return TryGetPortImpl(out port, p => true);
     }
 
     public static bool TryGetOpenPort<TPort>(out TPort port) where TPort : StreamPort {
-      return TryGetProcessImpl(out port, p => p.IsOpen);
+      return TryGetPortImpl(out port, p => p.IsOpen);
     }
 
     public static bool TryGetClosePort<TPort>(out TPort port) where TPort : StreamPort {
-      return TryGetProcessImpl(out port, p => p.IsClose);
+      return TryGetPortImpl(out port, p => p.IsClose);
     }
 
-    private static bool TryGetProcessImpl<TPort>(out TPort port, Func<StreamPort, bool> condition) where TPort : StreamPort {
+    private static bool TryGetPortImpl<TPort>(out TPort port, Func<StreamPort, bool> condition) where TPort : StreamPort {
       var type = typeof(TPort);
       port = null;
 
@@ -88,7 +88,7 @@ namespace VitroStake.RxPort {
       return false;
     }
 
-    internal static void UpdateOrAddProcess(StreamPort port) {
+    internal static void UpdateOrAddPort(StreamPort port) {
       _ports[port.GetType()] = port;
     }
 
