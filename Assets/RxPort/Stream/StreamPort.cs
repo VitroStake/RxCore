@@ -34,6 +34,12 @@ namespace VitroStake.RxPort {
 
     protected abstract void OpenCore();
     public abstract bool IsValid { get; }
+
+    protected void Register(params IDisposable[] streams) {
+      foreach (var stream in streams)
+        _disposables.Add(stream);
+    }
+
     protected CompositeDisposable _disposables;
 
     // CompositeDisposable is not automatically disposed
