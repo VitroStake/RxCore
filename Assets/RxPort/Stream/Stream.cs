@@ -22,7 +22,7 @@ namespace VitroStake.RxPort {
     }
   }
 
-  public static class Stream<TPayload> {
+  public static class Stream<TPayload> where TPayload : struct {
     public static void OnNext<TNotice>(TNotice notice, TPayload payload) where TNotice : Enum {
       var observer = SubjectStore<TNotice, TPayload>.GetOrCreateObserver(notice);
       observer.OnNext(payload);
@@ -37,7 +37,10 @@ namespace VitroStake.RxPort {
 }
 
 namespace VitroStake.RxPort.Internal {
-  internal static class SubjectStore<TNotice, TPayload> where TNotice : Enum {
+  internal static class SubjectStore<TNotice, TPayload>
+    where TNotice : Enum
+    where TPayload : struct {
+
     public static IObserver<TPayload> GetOrCreateObserver(TNotice notice) {
       if (!_subjects.ContainsKey(notice))
         _subjects[notice] = new Subject<TPayload>();
