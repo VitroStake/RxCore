@@ -5,7 +5,7 @@ using UnityEngine;
 using System;
 
 namespace VitroStake.RxPort {
-  public static class StreamPortStore {
+  public static class PortStore {
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void OnRuntimeInitialize() {
       _ports = new Dictionary<Type, StreamPort>();
