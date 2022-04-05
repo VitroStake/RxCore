@@ -26,6 +26,6 @@ namespace VitroStake.RxPort.Internal {
       return _subjects[notice];
     }
 
-    private static Dictionary<TNotice, Subject<TPayload>> _subjects;
+    private static Dictionary<TNotice, Subject<TPayload>> _subjects = new();
   }
 }

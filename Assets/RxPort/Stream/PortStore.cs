@@ -47,6 +47,6 @@ namespace VitroStake.RxPort {
       _ports[port.GetType()] = port;
     }
 
-    private static Dictionary<Type, StreamPort> _ports;
+    private static Dictionary<Type, StreamPort> _ports = new();
   }
 }
