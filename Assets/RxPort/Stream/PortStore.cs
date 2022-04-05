@@ -8,7 +8,7 @@ namespace VitroStake.RxPort {
   public static class PortStore {
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void OnRuntimeInitialize() {
-      _ports = new Dictionary<Type, StreamPort>();
+      _ports = new();
     }
 
     public static bool HasPort(Type type) {

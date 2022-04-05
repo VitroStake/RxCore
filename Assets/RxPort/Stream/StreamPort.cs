@@ -4,9 +4,12 @@ using UnityEngine;
 
 using System;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine.Assertions;
 
 namespace VitroStake.RxPort {
+  using Internal;
+
   public abstract class StreamPort : StreamObject {
     public StreamPort Open() {
       Assert.IsFalse(_opening);
@@ -37,15 +40,17 @@ namespace VitroStake.RxPort {
     public bool IsClose => !_opening;
 
     public StreamPort() {
-      _disposables = new CompositeDisposable();
+      Assert.IsNotNull(StreamDisposer.Instance);
+
+      StreamDisposer.Instance.OnDestroyAsObservable()
+        .Subscribe(_ =>
+        {
+          // You have to manually dispose a CompositeDisposable because it's not automatically disposed
+          _disposables.Dispose();
+        });
     }
 
-    // CompositeDisposable is not automatically disposed
-    ~StreamPort() {
-      _disposables.Dispose();
-    }
-
-    protected CompositeDisposable _disposables;
+    protected CompositeDisposable _disposables = new();
     private bool _opening;
   }
 }

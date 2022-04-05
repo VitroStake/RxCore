@@ -7,6 +7,11 @@ using System;
 
 namespace VitroStake.RxPort.Internal {
   internal static class SubjectStore<TNotice, TPayload> where TNotice : Enum {
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    static void OnRuntimeInitialize() {
+      _subjects = new();
+    }
+
     public static IObserver<TPayload> GetOrCreateObserver(TNotice notice) {
       if (!_subjects.ContainsKey(notice))
         _subjects[notice] = new Subject<TPayload>();
@@ -21,7 +26,6 @@ namespace VitroStake.RxPort.Internal {
       return _subjects[notice];
     }
 
-    // _subjects doesn't need to be reset in Domain Reloading
-    private static Dictionary<TNotice, Subject<TPayload>> _subjects = new();
+    private static Dictionary<TNotice, Subject<TPayload>> _subjects;
   }
 }
