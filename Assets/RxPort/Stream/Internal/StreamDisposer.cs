@@ -8,7 +8,7 @@ namespace VitroStake.RxPort.Internal {
     static void OnRuntimeInitialize() {
       Instance = new GameObject("StreamDisposer");
 
-      // OnDestroy() is called when you quit the game
+      // OnDestroy() is called when you quit the game.
       GameObject.DontDestroyOnLoad(Instance);
     }
 

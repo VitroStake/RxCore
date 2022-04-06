@@ -45,7 +45,7 @@ namespace VitroStake.RxPort {
       StreamDisposer.Instance.OnDestroyAsObservable()
         .Subscribe(_ =>
         {
-          // You have to manually dispose a CompositeDisposable because it's not automatically disposed
+          // You have to manually dispose a CompositeDisposable because it's not automatically disposed.
           _disposables.Dispose();
         });
     }
