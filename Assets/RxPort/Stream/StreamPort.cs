@@ -10,12 +10,37 @@ using UnityEngine.Assertions;
 namespace VitroStake.RxPort {
   using Internal;
 
-  public abstract class StreamPort : StreamObject {
+  public abstract class StreamPort : StreamFaucet {
+    protected static class Stream {
+      public static IObservable<Unit> Of<TStreamId, TNotice>(TStreamId id, TNotice notice)
+        where TStreamId : struct
+        where TNotice : Enum {
+
+        var observable = SubjectStore<TStreamId, TNotice, Unit>.GetOrCreateObservable(id, notice);
+        Assert.IsNotNull(StreamDisposer.Instance);
+        return observable.TakeUntilDestroy(StreamDisposer.Instance);
+      }
+    }
+
+    // In order to pay attention to the type of a payload, Stream<TPayload> is divided from Stream.
+    protected class Stream<TPayload> {
+      public static IObservable<TPayload> Of<TStreamId, TNotice>(TStreamId id, TNotice notice)
+        where TStreamId : struct
+        where TNotice : Enum {
+
+        var observable = SubjectStore<TStreamId, TNotice, TPayload>.GetOrCreateObservable(id, notice);
+        Assert.IsNotNull(StreamDisposer.Instance);
+        return observable.TakeUntilDestroy(StreamDisposer.Instance);
+      }
+    }
+
     public StreamPort Open() {
       Assert.IsFalse(_opening);
       Assert.IsTrue(IsValid);
 
-      OpenCore();
+      var streams = SubscribeStreams();
+      Register(streams);
+
       _opening = true;
 
       PortStore.UpdateOrAddPort(this);
@@ -33,7 +58,7 @@ namespace VitroStake.RxPort {
         _disposables.Add(stream);
     }
 
-    protected abstract void OpenCore();
+    protected abstract IDisposable[] SubscribeStreams();
     public abstract bool IsValid { get; }
 
     public bool IsOpen  => _opening;
