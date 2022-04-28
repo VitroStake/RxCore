@@ -34,7 +34,7 @@ namespace VitroStake.RxPort {
       }
     }
 
-    public StreamPort Open() {
+    public void Open() {
       Assert.IsFalse(_opening);
       Assert.IsTrue(IsValid);
 
@@ -44,8 +44,6 @@ namespace VitroStake.RxPort {
       _opening = true;
 
       PortStore.UpdateOrAddPort(this);
-
-      return this;
     }
 
     public void Close() {

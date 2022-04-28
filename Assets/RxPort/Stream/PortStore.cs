@@ -6,11 +6,6 @@ using System;
 
 namespace VitroStake.RxPort {
   public static class PortStore {
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    static void OnRuntimeInitialize() {
-      _ports = new();
-    }
-
     public static bool HasPort(Type type) {
       return _ports.ContainsKey(type);
     }
@@ -48,5 +43,12 @@ namespace VitroStake.RxPort {
     }
 
     private static Dictionary<Type, StreamPort> _ports = new();
+
+#if UNITY_EDITOR
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    static void OnRuntimeInitialize() {
+      _ports = new();
+    }
+#endif
   }
 }
