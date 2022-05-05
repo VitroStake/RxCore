@@ -201,9 +201,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce7ea8d987e977b46a2b0a388d667967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _iniArg:
-    Renderer: {fileID: 132157061}
-    Color: {r: 0.28924885, g: 0.8543098, b: 0.9433962, a: 0}
+  _renderer: {fileID: 132157061}
+  _color: {r: 0.24328054, g: 0.5239863, b: 0.7264151, a: 0}
 --- !u!65 &132157060
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -596,9 +595,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce7ea8d987e977b46a2b0a388d667967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _iniArg:
-    Renderer: {fileID: 1410905346}
-    Color: {r: 1, g: 0.25943398, b: 0.37928927, a: 0}
+  _renderer: {fileID: 1410905346}
+  _color: {r: 0.8396226, g: 0.40792987, b: 0.40792987, a: 0}
 --- !u!135 &1410905345
 SphereCollider:
   m_ObjectHideFlags: 0
