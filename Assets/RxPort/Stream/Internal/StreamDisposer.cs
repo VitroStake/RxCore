@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace VitroStake.RxPort.Internal {
+namespace VitroStake.RxPort {
   internal static class StreamDisposer {
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void OnRuntimeInitialize() {

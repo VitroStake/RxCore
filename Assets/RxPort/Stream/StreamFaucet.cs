@@ -6,8 +6,6 @@ using System;
 using UniRx;
 
 namespace VitroStake.RxPort {
-  using Internal;
-
   public abstract class StreamFaucet {
     public static void OnNext<TStreamId, TNotice>(TStreamId id, TNotice notice)
       where TStreamId : struct

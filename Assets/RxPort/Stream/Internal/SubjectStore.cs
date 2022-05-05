@@ -5,7 +5,7 @@ using UnityEngine;
 using UniRx;
 using System;
 
-namespace VitroStake.RxPort.Internal {
+namespace VitroStake.RxPort {
   internal static class SubjectStore<TStreamId, TNotice, TPayload>
     where TStreamId : struct
     where TNotice : Enum {
