@@ -12,7 +12,7 @@ namespace VitroStake.RxPort {
     IDisposable Subscribe<TPayload>(Action<TPayload> action, GameObject gameObject);
   }
 
-  internal class StreamSource<TStreamId, TNotice> : IStreamSource
+  internal struct StreamSource<TStreamId, TNotice> : IStreamSource
     where TStreamId : struct
     where TNotice : Enum {
 
