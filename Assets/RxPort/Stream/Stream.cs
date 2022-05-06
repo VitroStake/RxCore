@@ -5,11 +5,14 @@ using UnityEngine;
 using System;
 using UniRx;
 using UnityEngine.Assertions;
+using Cysharp.Threading.Tasks;
 
 namespace VitroStake.RxPort {
   public interface IStreamSource {
     IDisposable Subscribe(Action action, GameObject gameObject);
     IDisposable Subscribe<TPayload>(Action<TPayload> action, GameObject gameObject);
+    IDisposable SubscribeVoid(Func<UniTaskVoid> func, GameObject gameObject);
+    IDisposable SubscribeVoid<TPayload>(Func<TPayload, UniTaskVoid> func, GameObject gameObject);
   }
 
   internal struct StreamSource<TStreamId, TNotice> : IStreamSource
@@ -37,6 +40,30 @@ namespace VitroStake.RxPort {
         .Subscribe(payload =>
         {
           action(payload);
+        });
+    }
+
+    public IDisposable SubscribeVoid(Func<UniTaskVoid> func, GameObject gameObject) {
+      Assert.IsNotNull(gameObject);
+
+      var observable = SubjectStore<TStreamId, TNotice, Unit>.GetOrCreateObservable(_id, _notice);
+      return observable
+        .TakeUntilDestroy(gameObject)
+        .Subscribe(_ =>
+        {
+          func().Forget();
+        });
+    }
+
+    public IDisposable SubscribeVoid<TPayload>(Func<TPayload, UniTaskVoid> func, GameObject gameObject) {
+      Assert.IsNotNull(gameObject);
+
+      var observable = SubjectStore<TStreamId, TNotice, TPayload>.GetOrCreateObservable(_id, _notice);
+      return observable
+        .TakeUntilDestroy(gameObject)
+        .Subscribe(payload =>
+        {
+          func(payload).Forget();
         });
     }
 
