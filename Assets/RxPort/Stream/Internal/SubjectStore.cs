@@ -28,6 +28,6 @@ namespace VitroStake.RxPort {
     // so they have no means of initializing static fields without domain reload.
     // But in case of SubjectStore, _subjects doesn't need to be initialized other than capacity issue,
     // because it doesn't have any states.
-    private static Dictionary<(TStreamId, TNotice), Subject<TPayload>> _subjects = new();
+    private static Dictionary<(TStreamId, TNotice), Subject<TPayload>> _subjects = new Dictionary<(TStreamId, TNotice), Subject<TPayload>>(); // if C#9, use new()
   }
 }
